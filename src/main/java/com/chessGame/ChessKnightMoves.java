@@ -16,18 +16,31 @@ public class ChessKnightMoves {
 
     public static void main(String[] args) {
 
-        LinkedHashSet<String> result = getMoves();
+        LinkedHashSet<String> result = getAllPossibleMoves();
 
         System.out.println("result = " + result);
         System.out.println("result.size() = " + result.size());
 
     }
 
-    public static LinkedHashSet<String> getMoves() {
+    public static LinkedHashSet<String> getAllPossibleMoves(){
+        LinkedHashSet<String> allPossibleMoves = new LinkedHashSet<>();
+
+        for (int y = 0; y < board.length ; y++) {
+            for (int x = 0; x < board[0].length; x++) {
+                if(board[y][x] == null)continue;
+                allPossibleMoves.addAll(getMoves(y,x));
+            }
+
+        }
+        return allPossibleMoves;
+    }
+
+    public static LinkedHashSet<String> getMoves(int y1, int x1) {
         ArrayList<ArrayList<int[]>> positionsLevels = new ArrayList<>();
         LinkedHashSet<String> result = new LinkedHashSet<>();
 
-        int[] startPosition = getRandomPosition();//first level
+        int[] startPosition = new int[]{y1,x1};//first level
         positionsLevels.add(getPossiblePositions(startPosition));
         while (positionsLevels.get(0).size() != 0) { // second level
             int[] newPosition = positionsLevels.get(0).get(0);
