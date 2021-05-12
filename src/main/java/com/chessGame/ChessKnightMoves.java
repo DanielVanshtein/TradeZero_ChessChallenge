@@ -4,6 +4,16 @@ import java.util.*;
 
 public class ChessKnightMoves {
 
+
+    /**
+     * Possible Test Cases:
+     * 1. Length of all the contents of the linkedHashSet paths is 8
+     * 2. No null values found in any of the paths in the linkedHashSet
+     * 3. No more than two vowels in the paths
+     * 4. No duplicate paths.
+     * 5. Different variations of the chess board values (like all null, all have same letter)
+     */
+
     private static final List<String> vowels = Arrays.asList("A", "E", "I", "O", "U", "Y");
     private static final Random r = new Random();
     private static final String[][] board = new String[][]{
@@ -29,14 +39,14 @@ public class ChessKnightMoves {
         for (int y = 0; y < board.length ; y++) {
             for (int x = 0; x < board[0].length; x++) {
                 if(board[y][x] == null)continue;
-                allPossibleMoves.addAll(getMoves(y,x));
+                allPossibleMoves.addAll(getMovesOfAGivenLetter(y,x));
             }
 
         }
         return allPossibleMoves;
     }
 
-    public static LinkedHashSet<String> getMoves(int y1, int x1) {
+    public static LinkedHashSet<String> getMovesOfAGivenLetter(int y1, int x1) {
         ArrayList<ArrayList<int[]>> positionsLevels = new ArrayList<>();
         LinkedHashSet<String> result = new LinkedHashSet<>();
 
