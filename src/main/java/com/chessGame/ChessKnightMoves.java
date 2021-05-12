@@ -27,37 +27,37 @@ public class ChessKnightMoves {
         ArrayList<ArrayList<int[]>> positionsLevels = new ArrayList<>();
         LinkedHashSet<String> result = new LinkedHashSet<>();
 
-        int[] startPosition = getRandomPosition();
+        int[] startPosition = getRandomPosition();//first level
         positionsLevels.add(getPossiblePositions(startPosition));
-        while (positionsLevels.get(0).size() != 0) { // first level
+        while (positionsLevels.get(0).size() != 0) { // second level
             int[] newPosition = positionsLevels.get(0).get(0);
             positionsLevels.add(getPossiblePositions(newPosition));
-            while (positionsLevels.get(1).size() != 0) { // second level
+            while (positionsLevels.get(1).size() != 0) { // third level
                 newPosition = positionsLevels.get(1).get(0);
                 positionsLevels.add(getPossiblePositions(newPosition));
-                while (positionsLevels.get(2).size() != 0) { // third level
-                    newPosition = positionsLevels.get(2).get(0);
-                    positionsLevels.add(getPossiblePositions(newPosition));
-                    while (positionsLevels.get(3).size() != 0) { // fourth level
+                while (positionsLevels.get(2).size() != 0) { // fourth level
+                    newPosition = positionsLevels.get(2).get(0);//this is the new position of the knight
+                    positionsLevels.add(getPossiblePositions(newPosition));//now its calculating the possible moves and assigning it to the arrayList of int[]
+                    while (positionsLevels.get(3).size() != 0) { // fifth level
                         newPosition = positionsLevels.get(3).get(0);
                         positionsLevels.add(getPossiblePositions(newPosition));
-                        while (positionsLevels.get(4).size() != 0) { // fifth level
+                        while (positionsLevels.get(4).size() != 0) { // sixth level
                             newPosition = positionsLevels.get(4).get(0);
                             positionsLevels.add(getPossiblePositions(newPosition));
-                            while (positionsLevels.get(5).size() != 0) { // sixth level
+                            while (positionsLevels.get(5).size() != 0) { // seventh level
                                 newPosition = positionsLevels.get(5).get(0);
                                 positionsLevels.add(getPossiblePositions(newPosition));
                                 while (positionsLevels.get(6).size() != 0) { // eighth last level
-                                    StringBuilder combination = new StringBuilder(board[startPosition[0]][startPosition[1]]);
+                                    StringBuilder combination = new StringBuilder(board[startPosition[0]][startPosition[1]]);//for building my path
                                     for (ArrayList<int[]> positionsLevel : positionsLevels) {
                                         int y = positionsLevel.get(0)[0];
                                         int x = positionsLevel.get(0)[1];
-                                        combination.append(board[y][x]);
+                                        combination.append(board[y][x]);//goes through each coordinate we got and gets the Letter on the board and appends it into the path
                                     }
-                                    result.add(combination.toString());
-                                    positionsLevels.get(6).remove(0);
-                                }
-                                if (positionsLevels.get(6).size() == 0) positionsLevels.remove(6);
+                                    result.add(combination.toString());//adds to my hashset and filters duplicates
+                                    positionsLevels.get(6).remove(0);// removes the coordinate we just added and goes back to the while loop
+                                }//STARTS TO WORK BACKWARDS TO REMOVE EACH LETTER ONE BY ONE and get new paths everytime
+                                if (positionsLevels.get(6).size() == 0) positionsLevels.remove(6);//once its removed the size goes down to 0
                                 positionsLevels.get(5).remove(0);
                             }
                             if (positionsLevels.get(5).size() == 0) positionsLevels.remove(5);
@@ -85,14 +85,11 @@ public class ChessKnightMoves {
     }
 
     private static boolean hasMoreThanTwoVowels(String w) {
-        List<String> usedVowels = new ArrayList<>();
+        int count = 0;
         for (String s : w.split("")) {
-            if (vowels.contains(s)) {
-                if (usedVowels.contains(s)) return false;
-                if (usedVowels.size() == 2) return true;
-                usedVowels.add(s);
-            }
+            if (vowels.contains(s))  count++;
         }
+        if(count > 2) return true;   //will remove the path if returns true
         return false;
     }
 
